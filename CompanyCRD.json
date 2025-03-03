@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "cfb5477f-d33b-41de-81e8-dd5068e1530c",
+		"name": "Company",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38063550"
+	},
+	"item": [
+		{
+			"name": "Company- INCLUDE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>ID</th>\r",
+							"        <th>Company GUID</th>\r",
+							"        <th>Company Name</th>\r",
+							"        <th>Company URL</th>\r",
+							"        <th>City</th>\r",
+							"        <th>State</th>\r",
+							"        <th>Country</th>\r",
+							"        <th>Logo URL</th>\r",
+							"        <th>Public Profile URL</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.data}}\r",
+							"        <tr>\r",
+							"            <td>{{id}}</td>\r",
+							"            <td>{{pc_comp_guid}}</td>\r",
+							"            <td>{{rc_comp_name_drv}}</td>\r",
+							"            <td>{{ln_comp_url_cleaned_drv}}</td>\r",
+							"            <td>{{rc_comp_city_drv}}</td>\r",
+							"            <td>{{rc_comp_state_drv}}</td>\r",
+							"            <td>{{rc_comp_country_drv}}</td>\r",
+							"            <td>{{account_details.ln_comp_logo_url}}</td>\r",
+							"            <td>{{account_details.ln_comp_pub_profile_url}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within acceptable range\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status object should have message, requestId, and statusCode properties\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.status).to.be.an('object');\r",
+							"  pm.expect(responseData.status).to.have.property('message');\r",
+							"  pm.expect(responseData.status).to.have.property('requestId');\r",
+							"  pm.expect(responseData.status).to.have.property('statusCode');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Data array is present and empty\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.data).to.exist.and.to.be.an('array').that.is.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Bearer}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"search_text\": {\r\n            \"value\": \"\"\r\n        },\r\n        \"company_info\": {\r\n            \"company\": [\r\n                {\r\n                    \"name\": \"Gulbarga University\",\r\n                    \"type\": \"INCLUDE\"\r\n                }\r\n            ]\r\n        }\r\n    },\r\n    \"type\": \"ADVANCED_SEARCH_ACCOUNT\",\r\n    \"pagination\": {\r\n        \"page_size\": 10,\r\n        \"page_no\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qc1-apigateway.smarte.pro/search/v3/advanced-search",
+					"protocol": "https",
+					"host": [
+						"qc1-apigateway",
+						"smarte",
+						"pro"
+					],
+					"path": [
+						"search",
+						"v3",
+						"advanced-search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Company- Invalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Bearer}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"search_text\": {\r\n            \"value\": \"INDIA\"\r\n        },\r\n        \"company_info\": {\r\n            \"company\": [\r\n                {\r\n                    \"name\": \"Gulbarga University\",\r\n                    \"type\": \"EXCLUDE123\"\r\n                }\r\n            ]\r\n        }\r\n    },\r\n    \"type\": \"ADVANCED_SEARCH_ACCOUNT\",\r\n    \"pagination\": {\r\n        \"page_size\": 10,\r\n        \"page_no\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qc1-apigateway.smarte.pro/search/v3/advanced-search",
+					"protocol": "https",
+					"host": [
+						"qc1-apigateway",
+						"smarte",
+						"pro"
+					],
+					"path": [
+						"search",
+						"v3",
+						"advanced-search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Company Multyple",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.to.have.status(200));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify the response schema for the presence of status, data, message, requestId, and statusCode fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.status).to.exist.and.to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.status.message).to.exist;\r",
+							"    pm.expect(responseData.status.requestId).to.exist;\r",
+							"    pm.expect(responseData.status.statusCode).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the response data matches the provided payload information\", function () {\r",
+							"    const payload = {\r",
+							"        \"data\": {\r",
+							"            \"search_text\": {\r",
+							"                \"value\": \"INDIA\"\r",
+							"            },\r",
+							"            \"company_info\": {\r",
+							"                \"company\": [\r",
+							"                    {\"name\": \"Gulbarga University\", \"type\": \"EXCLUDE\"},\r",
+							"                    {\"name\": \"Tata Cummins\", \"type\": \"INCLUDE\"}\r",
+							"                ]\r",
+							"            }\r",
+							"        },\r",
+							"        \"type\": \"ADVANCED_SEARCH_ACCOUNT\",\r",
+							"        \"pagination\": {\r",
+							"            \"page_size\": 10,\r",
+							"            \"page_no\": 1\r",
+							"        }\r",
+							"    };\r",
+							"\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.data).to.eql(payload.data);\r",
+							"    pm.expect(responseData.type).to.eql(payload.type);\r",
+							"    pm.expect(responseData.pagination).to.eql(payload.pagination);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Bearer}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"search_text\": {\r\n            \"value\": \"INDIA\"\r\n        },\r\n        \"company_info\": {\r\n            \"company\": [\r\n                {\r\n                    \"name\": \"Gulbarga University\",\r\n                    \"type\": \"EXCLUDE\"\r\n                },\r\n                {\r\n                    \"name\": \"Tata Cummins\",\r\n                    \"type\": \"INCLUDE\"\r\n                },\r\n                {\r\n                    \"name\": \"Tech Malabaricus\",\r\n                    \"type\": \"INCLUDE\"\r\n                }\r\n            ]\r\n        }\r\n    },\r\n    \"type\": \"ADVANCED_SEARCH_ACCOUNT\",\r\n    \"pagination\": {\r\n        \"page_size\": 10,\r\n        \"page_no\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qc1-apigateway.smarte.pro/search/v3/advanced-search",
+					"protocol": "https",
+					"host": [
+						"qc1-apigateway",
+						"smarte",
+						"pro"
+					],
+					"path": [
+						"search",
+						"v3",
+						"advanced-search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Company- EXCLUDE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.to.have.status(200));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify the response schema for the presence of status, data, message, requestId, and statusCode fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.status).to.exist.and.to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.status.message).to.exist;\r",
+							"    pm.expect(responseData.status.requestId).to.exist;\r",
+							"    pm.expect(responseData.status.statusCode).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the result data matches the given payload information\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    const requestBody = pm.request.body;\r",
+							"\r",
+							"    pm.expect(responseData.data).to.be.an('array').and.not.to.be.empty;\r",
+							"\r",
+							"    responseData.data.forEach(function(item) {\r",
+							"        pm.expect(item).to.have.property('rc_comp_name_drv').that.is.a('string');\r",
+							"        pm.expect(item).to.have.property('rc_comp_city_drv').that.is.a('string');\r",
+							"        pm.expect(item).to.have.property('rc_comp_state_drv').that.is.a('string');\r",
+							"        /*pm.expect(item).to.have.property('rc_comp_country_drv').that.is.equal(requestBody.data.search_text.value);*/\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Bearer}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"search_text\": {\r\n            \"value\": \"INDIA\"\r\n        },\r\n        \"company_info\": {\r\n            \"company\": [\r\n                {\r\n                    \"name\": \"Gulbarga University\",\r\n                    \"type\": \"EXCLUDE\"\r\n                }\r\n            ]\r\n        }\r\n    },\r\n    \"type\": \"ADVANCED_SEARCH_ACCOUNT\",\r\n    \"pagination\": {\r\n        \"page_size\": 10,\r\n        \"page_no\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qc1-apigateway.smarte.pro/search/v3/advanced-search",
+					"protocol": "https",
+					"host": [
+						"qc1-apigateway",
+						"smarte",
+						"pro"
+					],
+					"path": [
+						"search",
+						"v3",
+						"advanced-search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
